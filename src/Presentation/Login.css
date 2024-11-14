@@ -1,0 +1,78 @@
+/* Full background color */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Centered box styling */
+.login-box {
+    width: 300px;
+    padding: 2rem;
+    text-align: center;
+    background-color: #cbb9a8;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* App name styling */
+.app-name {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #1f271b; /* Dark text color */
+}
+
+/* Input field styling */
+.input-field {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Divider styling */
+.divider {
+    margin: 1.5rem 0;
+    color: #1f271b; /* Light gray for divider */
+    font-weight: bold;
+}
+
+/* Button styling */
+.create-account-btn {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    background-color: #708ba3;
+    color: white;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for button */
+.create-account-btn:hover {
+    background-color: #005fa3; /* Darker shade on hover */
+}
+
+.login-btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    background-color: #153b44;
+    color: white;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for button */
+.login-btn:hover {
+    background-color: #1f271b; /* Darker shade on hover */
+}
