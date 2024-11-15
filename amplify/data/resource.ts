@@ -18,14 +18,15 @@ const schema = a.schema({
             name: a.string(),
             profileImageUrl: a.string(),
             isAuthenticated: a.boolean(),
+            PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'id'),
         }).authorization((allow) => [allow.publicApiKey()]),
 
       PersonalRecommendationFolder: a
       .model({
-        id: a.id().required(),
+        folderId: a.id().required(),
         name: a.string().required(),
         ownerId: a.id().required(), // Required reference field for relationship
-        owner: a.belongsTo("User", "ownerId"),
+        owner: a.belongsTo("User", "id"),
       })
       .authorization((allow) => [allow.publicApiKey()]),
 
