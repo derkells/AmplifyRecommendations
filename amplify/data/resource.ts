@@ -1,6 +1,9 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { type ClientSchema, a, defineData, defineFunction} from "@aws-amplify/backend";
 
-console.log('TEST HERE YAE')
+const userHandler = defineFunction({
+    entry: './handler.ts'
+})
+
 const schema = a.schema({
     Todo: a
         .model({
@@ -11,79 +14,36 @@ const schema = a.schema({
         name: a.string(),
         PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'userId'),
     }).authorization((allow) => [allow.publicApiKey()]),
-
     PersonalRecommendationFolder: a.model({
         id: a.id(),
         name: a.string().required(),
         userId: a.id().required(),
         user: a.belongsTo('User', 'userId'),
+        PersonalRecommendations: a.hasMany('PersonalRecommendation', 'folderId')
     }).authorization((allow) => [allow.publicApiKey()]),
 
-    // User: a
-    //     .model({
-    //         id: a.id(),
-    //         name: a.string(),
-    //         profileImageUrl: a.string(),
-    //         isAuthenticated: a.boolean(),
-    //         PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'userId'),
-    //     })
-    //     .authorization((allow) => [allow.publicApiKey()]),
-    // PersonalRecommendationFolder: a
-    //     .model({
-    //         id: a.id(), // Amplify auto-generates this by default; no need for `folderId`
-    //         name: a.string().required(),
-    //         userId: a.id().required(), // Establish relationship with User
-    //         user: a.belongsTo("User", "id"),
-    //     }).authorization((allow) => [allow.owner()]),
-    // // Individual recommendations within personal folders
-    // PersonalRecommendation: a
-    //     .model({
-    //         id: a.id().required(),
-    //         title: a.string().required(),
-    //         description: a.string(), // Optional description field
-    //         personalRecommendationFolderId: a.id().required(), // Required reference for relationship
-    //         personalRecommendationFolder: a.belongsTo("PersonalRecommendationFolder", "personalRecommendationFolderId"),
-    //         userId: a.id().required(),
-    //         user: a.belongsTo("User", "userId"),
-    //     })
-    //     .authorization((allow) => [allow.owner()]),
-    // // Model to manage following relationships between users
-    // Following: a
-    //     .model({
-    //         id: a.id().required(),
-    //         followerId: a.id().required(), // Required relationship
-    //         follower: a.belongsTo("User", "followerId"),
-    //         followingId: a.id().required(), // Required relationship
-    //         following: a.belongsTo("User", "followingId"),
-    //     })
-    //     .authorization((allow) => [allow.owner()]),
-    // // Liked folders containing recommendations from other users
-    // LikedRecommendationFolder: a
-    //     .model({
-    //         id: a.id().required(),
-    //         name: a.string().required(),
-    //         userId: a.id().required(),
-    //         user: a.belongsTo("User", "userId"),
-    //     })
-    //     .authorization((allow) => [allow.owner()]),
-    // // Model to represent liked recommendations from other users
-    // LikedRecommendation: a
-    //     .model({
-    //         id: a.id().required(),
-    //         title: a.string().required(),
-    //         description: a.string(),
-    //         likedRecommendationFolderId: a.id(), // Optional relationship for folder
-    //         likedRecommendationFolder: a.belongsTo("LikedRecommendationFolder", "likedRecommendationFolderId"),
-    //         originalPersonalRecommendationId: a.id().required(), // Required reference to original recommendation
-    //         originalPersonalRecommendation: a.belongsTo("PersonalRecommendation", "originalPersonalRecommendationId"),
-    //         userId: a.id().required(), // Required relationship for the user who liked this recommendation
-    //         user: a.belongsTo("User", "userId"),
-    //     })
-    //     .authorization((allow) => [allow.owner()]),
+    PersonalRecommendation: a.model({
+        id: a.id(),
+        name: a.string().required(),
+        link: a.string(),
+        description: a.string(),
+        folderId: a.id().required(),
+        folder: a.belongsTo('PersonalRecommendationFolder', 'folderId'),
+    }).authorization((allow) =>  [allow.publicApiKey()]),
+
+    FetchUsers: a.query()
+        .arguments({
+            content: a.string()
+        })
+        .returns(a.ref('User'))
+        .authorization((allow) => [allow.publicApiKey()])
+        .handler(a.handler.function(userHandler)),
+
 });
 
-export type Schema = ClientSchema<typeof schema>;
 
+
+export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
     schema,
     authorizationModes: {
