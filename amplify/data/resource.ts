@@ -23,14 +23,57 @@ const schema1 = a.schema({
         isAuthenticated: a.boolean().required(),
       })
       .authorization((allow) => [allow.publicApiKey()]),
-  PersonalRecommendationFolder: a
-      .model({
-        id: a.id().required(),
-        name: a.string().required(),
-        ownerId: a.id().required(), // Required reference field for relationship
-        owner: a.belongsTo("User", "ownerId"),
-      })
-      .authorization((allow) => [allow.owner()]),
+  //
+//   // Individual recommendations within personal folders
+//   PersonalRecommendation: a
+//       .model({
+//         id: a.id().required(),
+//         title: a.string().required(),
+//         description: a.string(), // Optional description field
+//         folderId: a.id().required(), // Required reference for relationship
+//         folder: a.belongsTo("PersonalRecommendationFolder", "folderId"),
+//         ownerId: a.id().required(),
+//         owner: a.belongsTo("User", "ownerId"),
+//       })
+//       .authorization((allow) => [allow.owner()]),
+//
+//   // Model to manage following relationships between users
+//   Following: a
+//       .model({
+//         id: a.id().required(),
+//         followerId: a.id().required(), // Required relationship
+//         follower: a.belongsTo("User", "followerId"),
+//         followingId: a.id().required(), // Required relationship
+//         following: a.belongsTo("User", "followingId"),
+//       })
+//       .authorization((allow) => [allow.owner()]),
+//
+//   // Liked folders containing recommendations from other users
+//   LikedRecommendationFolder: a
+//       .model({
+//         id: a.id().required(),
+//         name: a.string().required(),
+//         ownerId: a.id().required(),
+//         owner: a.belongsTo("User", "ownerId"),
+//       })
+//       .authorization((allow) => [allow.owner()]),
+//
+//   // Model to represent liked recommendations from other users
+//   LikedRecommendation: a
+//       .model({
+//         id: a.id().required(),
+//         title: a.string().required(),
+//         description: a.string(),
+//         folderId: a.id(), // Optional relationship for folder
+//         folder: a.belongsTo("LikedRecommendationFolder", "folderId"),
+//         originalRecommendationId: a.id().required(), // Required reference to original recommendation
+//         originalRecommendation: a.belongsTo("PersonalRecommendation", "originalRecommendationId"),
+//         likedByUserId: a.id().required(), // Required relationship for the user who liked this recommendation
+//         likedByUser: a.belongsTo("User", "likedByUserId"),
+//       })
+//       .authorization((allow) => [allow.owner()]),
+
+
 })
 
 
