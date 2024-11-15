@@ -14,7 +14,28 @@ const schema = a.schema({
     .authorization((allow) => [allow.publicApiKey()]),
 });
 
-export type Schema = ClientSchema<typeof schema>;
+const schema1 = a.schema({
+  User: a
+      .model({
+        id: a.id().required(),
+        name: a.string().required(),
+        profileImageUrl: a.string(),
+        isAuthenticated: a.boolean().required(),
+      })
+      .authorization((allow) => [allow.publicApiKey()]),
+  PersonalRecommendationFolder: a
+      .model({
+        id: a.id().required(),
+        name: a.string().required(),
+        ownerId: a.id().required(), // Required reference field for relationship
+        owner: a.belongsTo("User", "ownerId"),
+      })
+      .authorization((allow) => [allow.owner()]),
+})
+
+
+
+export type Schema = ClientSchema<typeof schema1>;
 
 export const data = defineData({
   schema,
