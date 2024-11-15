@@ -20,7 +20,7 @@ const schema = a.schema({
             id: a.id(), // Amplify auto-generates this by default; no need for `folderId`
             name: a.string().required(),
             userId: a.id().required(), // Establish relationship with User
-            user: a.belongsTo("User", "userId"),
+            user: a.belongsTo("User", "id"),
         })
     //     .authorization((allow) => [allow.owner()]),
     // // Individual recommendations within personal folders
