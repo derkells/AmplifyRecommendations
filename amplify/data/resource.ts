@@ -27,7 +27,7 @@ const schema = a.schema({
         ownerId: a.id().required(), // Required reference field for relationship
         owner: a.belongsTo("User", "ownerId"),
       })
-      .authorization((allow) => [allow.owner()]),
+      .authorization((allow) => [allow.publicApiKey()]),
 
 
       // Individual recommendations within personal folders
