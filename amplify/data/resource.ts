@@ -17,10 +17,10 @@ const schema = a.schema({
 const schema1 = a.schema({
   User: a
       .model({
-        id: a.id().required(),
-        name: a.string().required(),
+        id: a.id(),
+        name: a.string(),
         profileImageUrl: a.string(),
-        isAuthenticated: a.boolean().required(),
+        isAuthenticated: a.boolean(),
       })
       .authorization((allow) => [allow.publicApiKey()]),
   //
