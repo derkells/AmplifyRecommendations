@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
+console.log('TEST HERE YAE')
 const schema = a.schema({
     Todo: a
         .model({
@@ -8,14 +9,16 @@ const schema = a.schema({
         .authorization((allow) => [allow.publicApiKey()]),
     User: a.model({
         name: a.string(),
-        PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolders', 'userId'),
+        PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'userId'),
     }).authorization((allow) => [allow.publicApiKey()]),
+
     PersonalRecommendationFolder: a.model({
         id: a.id(),
         name: a.string().required(),
         userId: a.id().required(),
         user: a.belongsTo('User', 'userId'),
-    })
+    }).authorization((allow) => [allow.publicApiKey()]),
+
     // User: a
     //     .model({
     //         id: a.id(),
