@@ -4,8 +4,8 @@ import { type Schema } from '../../amplify/data/resource.ts';
 
 function TestSchema() {
  const [content, setContent] = useState(''); // State for input value
- const [data, setData] = useState(null); // State for query results
- const [error, setError] = useState(null); // Explicitly allow any type for errors
+ //const [data, setData] = useState(null); // State for query results
+ //const [error, setError] = useState(null); // Explicitly allow any type for errors
 
  // Generate the client to use for querying
  const client = generateClient<Schema>();
@@ -46,18 +46,18 @@ function TestSchema() {
        />
        <button onClick={handleFetchUsers}>Fetch Users</button>
       </div>
-      {data && (
-          <div>
-           <h2>Result:</h2>
-           <pre>{JSON.stringify(data, null, 2)}</pre>
-          </div>
-      )}
-      {error && (
-          <div>
-           <h2>Error:</h2>
-           <pre style={{ color: 'red' }}>{JSON.stringify(error, null, 2)}</pre>
-          </div>
-      )}
+      {/*{data && (*/}
+      {/*    <div>*/}
+      {/*     <h2>Result:</h2>*/}
+      {/*     <pre>{JSON.stringify(data, null, 2)}</pre>*/}
+      {/*    </div>*/}
+      {/*)}*/}
+      {/*{error && (*/}
+      {/*    <div>*/}
+      {/*     <h2>Error:</h2>*/}
+      {/*     <pre style={{ color: 'red' }}>{JSON.stringify(error, null, 2)}</pre>*/}
+      {/*    </div>*/}
+      {/*)}*/}
      </div>
  );
 }
