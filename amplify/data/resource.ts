@@ -21,14 +21,13 @@ const schema = a.schema({
             PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'id'),
         }).authorization((allow) => [allow.publicApiKey()]),
 
-      PersonalRecommendationFolder: a
-      .model({
-        folderId: a.id().required(),
-        name: a.string().required(),
-        ownerId: a.id().required(), // Required reference field for relationship
-        owner: a.belongsTo("User", "id"),
-      })
-      .authorization((allow) => [allow.publicApiKey()]),
+    PersonalRecommendationFolder: a
+        .model({
+            id: a.id(), // Amplify auto-generates this by default; no need for `folderId`
+            name: a.string().required(),
+            owner: a.belongsTo("User", "id"), // Establish relationship with User
+        })
+        .authorization((allow) => [allow.publicApiKey()]),
 
 
       // Individual recommendations within personal folders
