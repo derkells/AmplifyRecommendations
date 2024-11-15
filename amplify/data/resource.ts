@@ -9,23 +9,19 @@ specifies that any user authenticated via an API key can "create", "read",
 const schema = a.schema({
   Todo: a
     .model({
-        name: a.string(),
-        profileImageUrl: a.string(),
-        isAuthenticated: a.boolean(),
+      content: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+    User: a
+        .model({
+            id: a.id(),
+            name: a.string(),
+            profileImageUrl: a.string(),
+            isAuthenticated: a.boolean(),
+        }).authorization((allow) => [allow.publicApiKey()]),
 });
 
-// const schema1 = a.schema({
-//   User: a
-//       .model({
-//         id: a.id(),
-//         name: a.string(),
-//         profileImageUrl: a.string(),
-//         isAuthenticated: a.boolean(),
-//       })
-//       .authorization((allow) => [allow.publicApiKey()]),
-// })
+
   //
 //   // Individual recommendations within personal folders
 //   PersonalRecommendation: a
