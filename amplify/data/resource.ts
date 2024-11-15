@@ -18,40 +18,38 @@ const schema = a.schema({
             name: a.string(),
             profileImageUrl: a.string(),
             isAuthenticated: a.boolean(),
-            PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'id'),
-        }).authorization((allow) => [allow.publicApiKey()]),
+            personalRecommendationFolders: a.hasMany('personalRecommendationFolder', 'id'),
+            followerId: a.hasMany('Following', 'id'),
+            followingId: a.hasMany('Following','id'),
+        }).authorization((allow) => [allow.owner()]),
 
-    PersonalRecommendationFolder: a
+    personalRecommendationFolder: a
         .model({
             id: a.id(), // Amplify auto-generates this by default; no need for `folderId`
             name: a.string().required(),
             owner: a.belongsTo("User", "id"), // Establish relationship with User
+            personalRecommendations: a.hasMany('PersonalRecommendation)', 'id'),
         })
-        .authorization((allow) => [allow.publicApiKey()]),
+        .authorization((allow) => [allow.owner()]),
 
 
       // Individual recommendations within personal folders
-  // PersonalRecommendation: a
-  //     .model({
-  //       id: a.id().required(),
-  //       title: a.string().required(),
-  //       description: a.string(), // Optional description field
-  //       folderId: a.id().required(), // Required reference for relationship
-  //       folder: a.belongsTo("PersonalRecommendationFolder", "folderId"),
-  //       ownerId: a.id().required(),
-  //       owner: a.belongsTo("User", "ownerId"),
-  //     })
-  //     .authorization((allow) => [allow.owner()]),
+  PersonalRecommendation: a
+      .model({
+        id: a.id().required(),
+        title: a.string().required(),
+        description: a.string(), // Optional description field
+        folder: a.belongsTo("personalRecommendationFolder", "id"),
+      })
+      .authorization((allow) => [allow.owner()]),
   //     // Model to manage following relationships between users
-  // Following: a
-  //     .model({
-  //       id: a.id().required(),
-  //       followerId: a.id().required(), // Required relationship
-  //       follower: a.belongsTo("User", "followerId"),
-  //       followingId: a.id().required(), // Required relationship
-  //       following: a.belongsTo("User", "followingId"),
-  //     })
-  //     .authorization((allow) => [allow.owner()]),
+  Following: a
+      .model({
+        id: a.id().required(),
+        follower: a.belongsTo("User", "followerId"),
+        following: a.belongsTo("User", "followingId"),
+      })
+      .authorization((allow) => [allow.owner()]),
   //
   // // Liked folders containing recommendations from other users
   // LikedRecommendationFolder: a
@@ -142,7 +140,7 @@ Fetch records from the database and use them in your frontend component.
 //       .authorization((allow) => [allow.publicApiKey()]),
 //
 //   // Folder for user's personal recommendations (Movies, Music, etc.)
-//   PersonalRecommendationFolder: a
+//   personalRecommendationFolder: a
 //       .model({
 //         id: a.id().required(),
 //         name: a.string().required(),
@@ -158,7 +156,7 @@ Fetch records from the database and use them in your frontend component.
 //         title: a.string().required(),
 //         description: a.string(), // Optional description field
 //         folderId: a.id().required(), // Required reference for relationship
-//         folder: a.belongsTo("PersonalRecommendationFolder", "folderId"),
+//         folder: a.belongsTo("personalRecommendationFolder", "folderId"),
 //         ownerId: a.id().required(),
 //         owner: a.belongsTo("User", "ownerId"),
 //       })
