@@ -9,20 +9,21 @@ specifies that any user authenticated via an API key can "create", "read",
 const schema = a.schema({
   Todo: a
     .model({
-      content: a.string(),
+      id: a.id(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
 });
 
-const schema1 = a.schema({
-  User: a
-      .model({
-        id: a.id(),
-        name: a.string(),
-        profileImageUrl: a.string(),
-        isAuthenticated: a.boolean(),
-      })
-      .authorization((allow) => [allow.publicApiKey()]),
+// const schema1 = a.schema({
+//   User: a
+//       .model({
+//         id: a.id(),
+//         name: a.string(),
+//         profileImageUrl: a.string(),
+//         isAuthenticated: a.boolean(),
+//       })
+//       .authorization((allow) => [allow.publicApiKey()]),
+// })
   //
 //   // Individual recommendations within personal folders
 //   PersonalRecommendation: a
@@ -74,11 +75,11 @@ const schema1 = a.schema({
 //       .authorization((allow) => [allow.owner()]),
 
 
-})
 
 
 
-export type Schema = ClientSchema<typeof schema1>;
+
+export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
   schema,
