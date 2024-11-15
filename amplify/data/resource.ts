@@ -26,9 +26,7 @@ const schema = a.schema({
         title: a.string().required(),
         description: a.string(), // Optional description field
         folderId: a.id().required(), // Required reference for relationship
-        folder: a.belongsTo("PersonalRecommendationFolder", "folderId"),
-        ownerId: a.id().required(),
-        owner: a.belongsTo("User", "ownerId"),
+
       })
       .authorization((allow) => [allow.owner()]),
   //     // Model to manage following relationships between users
