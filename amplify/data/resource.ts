@@ -20,17 +20,17 @@ const schema = a.schema({
             isAuthenticated: a.boolean(),
         }).authorization((allow) => [allow.publicApiKey()]),
       // Individual recommendations within personal folders
-  // PersonalRecommendation: a
-  //     .model({
-  //       id: a.id().required(),
-  //       title: a.string().required(),
-  //       description: a.string(), // Optional description field
-  //       folderId: a.id().required(), // Required reference for relationship
-  //       folder: a.belongsTo("PersonalRecommendationFolder", "folderId"),
-  //       ownerId: a.id().required(),
-  //       owner: a.belongsTo("User", "ownerId"),
-  //     })
-  //     .authorization((allow) => [allow.owner()]),
+  PersonalRecommendation: a
+      .model({
+        id: a.id().required(),
+        title: a.string().required(),
+        description: a.string(), // Optional description field
+        folderId: a.id().required(), // Required reference for relationship
+        folder: a.belongsTo("PersonalRecommendationFolder", "folderId"),
+        ownerId: a.id().required(),
+        owner: a.belongsTo("User", "ownerId"),
+      })
+      .authorization((allow) => [allow.owner()]),
   //     // Model to manage following relationships between users
   // Following: a
   //     .model({
