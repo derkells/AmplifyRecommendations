@@ -6,23 +6,32 @@ const schema = a.schema({
             content: a.string(),
         })
         .authorization((allow) => [allow.publicApiKey()]),
-    User: a
-        .model({
-            id: a.id(),
-            name: a.string(),
-            profileImageUrl: a.string(),
-            isAuthenticated: a.boolean(),
-            PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'userId'),
-        })
-        .authorization((allow) => [allow.publicApiKey()]),
-    PersonalRecommendationFolder: a
-        .model({
-            id: a.id(), // Amplify auto-generates this by default; no need for `folderId`
-            name: a.string().required(),
-            userId: a.id().required(), // Establish relationship with User
-            user: a.belongsTo("User", "id"),
-        })
-    //     .authorization((allow) => [allow.owner()]),
+    User: a.model({
+        name: a.string(),
+        PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolders', 'userId'),
+    }).authorization((allow) => [allow.publicApiKey()]),
+    PersonalRecommendationFolder: a.model({
+        id: a.id(),
+        name: a.string().required(),
+        userId: a.id().required(),
+        user: a.belongsTo('User', 'userId'),
+    })
+    // User: a
+    //     .model({
+    //         id: a.id(),
+    //         name: a.string(),
+    //         profileImageUrl: a.string(),
+    //         isAuthenticated: a.boolean(),
+    //         PersonalRecommendationFolders: a.hasMany('PersonalRecommendationFolder', 'userId'),
+    //     })
+    //     .authorization((allow) => [allow.publicApiKey()]),
+    // PersonalRecommendationFolder: a
+    //     .model({
+    //         id: a.id(), // Amplify auto-generates this by default; no need for `folderId`
+    //         name: a.string().required(),
+    //         userId: a.id().required(), // Establish relationship with User
+    //         user: a.belongsTo("User", "id"),
+    //     }).authorization((allow) => [allow.owner()]),
     // // Individual recommendations within personal folders
     // PersonalRecommendation: a
     //     .model({
